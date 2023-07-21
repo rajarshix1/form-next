@@ -23,7 +23,7 @@ const FormModal = () => {
     <>
       <Modal show={showModal} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Modal Title</Modal.Title>
+          <Modal.Title>Preview Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <DynamicForm form={{
@@ -35,9 +35,6 @@ const FormModal = () => {
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

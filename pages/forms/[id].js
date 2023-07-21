@@ -42,6 +42,10 @@ console.log(e);
 
   return (
     <>
+      <div className="m-2 p-2">
+      {singleForm && <h1>{singleForm.title}</h1>}
+      </div>
+      <div className="m-2 p-2">
       {singleForm && <DynamicForm
         form={{
           // title: singleForm.title,
@@ -49,6 +53,7 @@ console.log(e);
           components: singleForm.components,
         }} onSubmit={submitHandler}
       />}
+      </div>
     </>
   );
 };

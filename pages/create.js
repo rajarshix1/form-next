@@ -5,17 +5,29 @@ import { AppContext } from '@/context/appcontext';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'formiojs/dist/formio.full.min.css';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
 const DynamicForm = dynamic(() => import('@formio/react').then((module) => module.FormBuilder), {
   ssr: false,
 });
 
 export default function CreateForm() {
   const handleSubmit = async () =>{
-    console.log('abc', formData);
-    const data = await axios.post('/api/form/create',{
-      title: formName,
-      components: formData})
-      console.log(data);
+    if(formName.length<1){
+      toast.error('Form name should not be blank')
+    }
+    else{
+      console.log('abc', formData);
+      const data = await axios.post('/api/form/create',{
+        title: formName,
+        components: formData})
+        console.log(data);
+        if(data.data.status==0){
+          toast.error(data.data.message)
+        }else{
+          toast.success(data.data.message)
+        }
+    }
   }
   const handleShow = async () =>{
     setShowModal(true)
@@ -43,8 +55,8 @@ export default function CreateForm() {
       )}
     </div>
     <div className='flex justify-center '>
-    <button className='bg-red-500 text-2xl m-2  p-4 rounded-full	' onClick={handleShow}>Preview Form</button>
-    <button className='bg-red-500 text-2xl m-2 p-4 rounded-full	' onClick={handleSubmit}>Save form</button>
+    <button className='bg-red-500 text-xl m-2  p-2 rounded-full	' onClick={handleShow}>Preview Form</button>
+    <button className='bg-red-500 text-xl m-2 p-2 rounded-full	' onClick={handleSubmit}>Save form</button>
     </div>
       
     </>

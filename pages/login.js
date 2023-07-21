@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
     const router = useRouter();
@@ -17,12 +18,21 @@ const LoginPage = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const logindata = await axios.post('/api/user/login', {
+    if(email.length<3 && password.length<6){
+      toast.error('Password must be at least 6 characters long')
+    }else{
+      const logindata = await axios.post('/api/user/login', {
         email:email, password: password
     })
     console.log(logindata.data);
-    router.push('/user')
-  };
+    if (logindata.data.status==1) {
+        toast.success('Login successful')
+        router.push('/user')
+    }else{
+      toast.error(logindata.data.message)
+    }
+    }
+      };
 
   return (
     <div>
@@ -36,7 +46,7 @@ const LoginPage = () => {
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} />
         </div>
-        <button type="submit">Login</button>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Login</button>
       </form>
     </div>
   );
